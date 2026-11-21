@@ -1,0 +1,1084 @@
+[
+  {
+    "id": "demo-1",
+    "title": "A Comprehensive Study of Retrieval-Augmented Generation (RAG)",
+    "authors": "Zhang Y., Li X., Wang H.",
+    "year": 2024,
+    "kind": "Научная статья",
+    "abstract": "Сравнение конфигураций RAG на трёх наборах открытых вопросов. Авторы исследуют влияние поиска по фрагментам на точность ответов генератора.",
+    "config": {
+      "variant": "Стандартный RAG",
+      "model": "Llama 3.1 70B",
+      "embedding": "OpenAI text-embedding-3-large",
+      "top_k": 5,
+      "chunk_size": 512,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "NQ",
+      "TriviaQA",
+      "WebQuestions"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-1-m1",
+        "name": "Recall@5",
+        "raw": "0.890",
+        "unit": "fraction",
+        "value": 0.89,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e1",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "NQ   Recall@5 = 0.890 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m2",
+        "name": "MRR@10",
+        "raw": "0.780",
+        "unit": "fraction",
+        "value": 0.78,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e1",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "NQ   MRR@10 = 0.780 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m3",
+        "name": "EM",
+        "raw": "0.456",
+        "unit": "fraction",
+        "value": 0.456,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e1",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "NQ   EM = 0.456 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m4",
+        "name": "Recall@5",
+        "raw": "0.894",
+        "unit": "fraction",
+        "value": 0.894,
+        "dataset": "TriviaQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e2",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "TriviaQA   Recall@5 = 0.894 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m5",
+        "name": "MRR@10",
+        "raw": "0.783",
+        "unit": "fraction",
+        "value": 0.783,
+        "dataset": "TriviaQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e2",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "TriviaQA   MRR@10 = 0.783 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m6",
+        "name": "EM",
+        "raw": "0.472",
+        "unit": "fraction",
+        "value": 0.472,
+        "dataset": "TriviaQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e2",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "TriviaQA   EM = 0.472 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m7",
+        "name": "Recall@5",
+        "raw": "0.892",
+        "unit": "fraction",
+        "value": 0.892,
+        "dataset": "WebQuestions",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e3",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "WebQuestions   Recall@5 = 0.892 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m8",
+        "name": "MRR@10",
+        "raw": "0.781",
+        "unit": "fraction",
+        "value": 0.781,
+        "dataset": "WebQuestions",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e3",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "WebQuestions   MRR@10 = 0.781 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-1-m9",
+        "name": "EM",
+        "raw": "0.468",
+        "unit": "fraction",
+        "value": 0.468,
+        "dataset": "WebQuestions",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-1-e3",
+        "config_id": "demo-1-c1",
+        "page": 3,
+        "fragment": "WebQuestions   EM = 0.468 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Standard RAG"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: Llama 3.1 70B"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: OpenAI text-embedding-3-large"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 5"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 512 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-1.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-2",
+    "title": "Retrieval-Augmented Generation with Adaptive Chunking",
+    "authors": "Chen L., Huang Z.",
+    "year": 2024,
+    "kind": "Конференция",
+    "abstract": "Адаптивное разбиение документов на фрагменты и его влияние на полноту поиска и качество ответов.",
+    "config": {
+      "variant": "Адаптивное разбиение",
+      "model": "Llama 3 8B",
+      "embedding": "Dense encoder",
+      "top_k": 10,
+      "chunk_size": 256,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "NQ"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-2-m1",
+        "name": "Recall@5",
+        "raw": "0.894",
+        "unit": "fraction",
+        "value": 0.894,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-2-e1",
+        "config_id": "demo-2-c1",
+        "page": 3,
+        "fragment": "NQ   Recall@5 = 0.894 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-2-m2",
+        "name": "MRR@10",
+        "raw": "0.783",
+        "unit": "fraction",
+        "value": 0.783,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-2-e1",
+        "config_id": "demo-2-c1",
+        "page": 3,
+        "fragment": "NQ   MRR@10 = 0.783 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-2-m3",
+        "name": "EM",
+        "raw": "0.472",
+        "unit": "fraction",
+        "value": 0.472,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-2-e1",
+        "config_id": "demo-2-c1",
+        "page": 3,
+        "fragment": "NQ   EM = 0.472 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Adaptive chunking"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: Llama 3 8B"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 10"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 256 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-2.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-3",
+    "title": "Self-Reflective RAG for Factuality Improvement",
+    "authors": "Park S., Kim D.",
+    "year": 2024,
+    "kind": "Научная статья",
+    "abstract": "Проверка фактической точности утверждений с повторной оценкой найденного контекста.",
+    "config": {
+      "variant": "Саморефлексия",
+      "model": "Mistral 7B",
+      "embedding": "Dense encoder",
+      "top_k": 10,
+      "chunk_size": 512,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "Извлечение фактов",
+    "datasets": [
+      "FEVER"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-3-m1",
+        "name": "Recall@5",
+        "raw": "0.872",
+        "unit": "fraction",
+        "value": 0.872,
+        "dataset": "FEVER",
+        "task": "Извлечение фактов",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-3-e1",
+        "config_id": "demo-3-c1",
+        "page": 3,
+        "fragment": "FEVER   Recall@5 = 0.872 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-3-m2",
+        "name": "MRR@10",
+        "raw": "0.768",
+        "unit": "fraction",
+        "value": 0.768,
+        "dataset": "FEVER",
+        "task": "Извлечение фактов",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-3-e1",
+        "config_id": "demo-3-c1",
+        "page": 3,
+        "fragment": "FEVER   MRR@10 = 0.768 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-3-m3",
+        "name": "EM",
+        "raw": "0.498",
+        "unit": "fraction",
+        "value": 0.498,
+        "dataset": "FEVER",
+        "task": "Извлечение фактов",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-3-e1",
+        "config_id": "demo-3-c1",
+        "page": 3,
+        "fragment": "FEVER   EM = 0.498 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Self-reflective"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: Mistral 7B"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 10"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 512 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-3.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-4",
+    "title": "Multi-hop RAG for Complex QA",
+    "authors": "Lee J., Kim H.",
+    "year": 2024,
+    "kind": "Научная статья",
+    "abstract": "Последовательный поиск подтверждений для вопросов, требующих нескольких шагов рассуждения.",
+    "config": {
+      "variant": "Многоэтапный",
+      "model": "GPT-4o",
+      "embedding": "Dense encoder",
+      "top_k": 5,
+      "chunk_size": 256,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "HotpotQA"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-4-m1",
+        "name": "Recall@5",
+        "raw": "0.935",
+        "unit": "fraction",
+        "value": 0.935,
+        "dataset": "HotpotQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-4-e1",
+        "config_id": "demo-4-c1",
+        "page": 3,
+        "fragment": "HotpotQA   Recall@5 = 0.935 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-4-m2",
+        "name": "MRR@10",
+        "raw": "0.864",
+        "unit": "fraction",
+        "value": 0.864,
+        "dataset": "HotpotQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-4-e1",
+        "config_id": "demo-4-c1",
+        "page": 3,
+        "fragment": "HotpotQA   MRR@10 = 0.864 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-4-m3",
+        "name": "EM",
+        "raw": "0.638",
+        "unit": "fraction",
+        "value": 0.638,
+        "dataset": "HotpotQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-4-e1",
+        "config_id": "demo-4-c1",
+        "page": 3,
+        "fragment": "HotpotQA   EM = 0.638 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Multi-hop"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: GPT-4o"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 5"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 256 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-4.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-5",
+    "title": "Multi-Vector Retrieval for RAG",
+    "authors": "Li J., Zhou M.",
+    "year": 2023,
+    "kind": "Конференция",
+    "abstract": "Многовекторное представление документов для поиска сведений по сложным запросам.",
+    "config": {
+      "variant": "Многовекторный",
+      "model": "Llama 2 13B",
+      "embedding": "Dense encoder",
+      "top_k": 10,
+      "chunk_size": 512,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "NQ"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-5-m1",
+        "name": "Recall@5",
+        "raw": "0.872",
+        "unit": "fraction",
+        "value": 0.872,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-5-e1",
+        "config_id": "demo-5-c1",
+        "page": 3,
+        "fragment": "NQ   Recall@5 = 0.872 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-5-m2",
+        "name": "MRR@10",
+        "raw": "0.754",
+        "unit": "fraction",
+        "value": 0.754,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-5-e1",
+        "config_id": "demo-5-c1",
+        "page": 3,
+        "fragment": "NQ   MRR@10 = 0.754 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-5-m3",
+        "name": "EM",
+        "raw": "0.448",
+        "unit": "fraction",
+        "value": 0.448,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-5-e1",
+        "config_id": "demo-5-c1",
+        "page": 3,
+        "fragment": "NQ   EM = 0.448 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Multi-vector"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: Llama 2 13B"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 10"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 512 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-5.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-6",
+    "title": "RAG for Long-Context Summarization",
+    "authors": "Martin E., Rao A.",
+    "year": 2023,
+    "kind": "Научная статья",
+    "abstract": "Извлечение ключевых фрагментов из новостных материалов для построения краткого обзора.",
+    "config": {
+      "variant": "Стандартный RAG",
+      "model": "Llama 2 70B",
+      "embedding": "Dense encoder",
+      "top_k": 10,
+      "chunk_size": 256,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "Суммаризация",
+    "datasets": [
+      "MultiNews"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-6-m1",
+        "name": "ROUGE-L",
+        "raw": "0.447",
+        "unit": "fraction",
+        "value": 0.447,
+        "dataset": "MultiNews",
+        "task": "Суммаризация",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-6-e1",
+        "config_id": "demo-6-c1",
+        "page": 3,
+        "fragment": "MultiNews   ROUGE-L = 0.447 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Standard RAG"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: Llama 2 70B"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 10"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 256 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-6.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-7",
+    "title": "RAG with Query Rewriting for Open-Domain QA",
+    "authors": "Lin T., Miller J.",
+    "year": 2023,
+    "kind": "Научная статья",
+    "abstract": "Преобразование исходного вопроса в поисковый запрос для повышения полноты выдачи.",
+    "config": {
+      "variant": "HyDE",
+      "model": "Llama 2 13B",
+      "embedding": "Dense encoder",
+      "top_k": 5,
+      "chunk_size": 512,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "TriviaQA"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-7-m1",
+        "name": "Recall@5",
+        "raw": "0.891",
+        "unit": "fraction",
+        "value": 0.891,
+        "dataset": "TriviaQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-7-e1",
+        "config_id": "demo-7-c1",
+        "page": 3,
+        "fragment": "TriviaQA   Recall@5 = 0.891 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-7-m2",
+        "name": "MRR@10",
+        "raw": "0.772",
+        "unit": "fraction",
+        "value": 0.772,
+        "dataset": "TriviaQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-7-e1",
+        "config_id": "demo-7-c1",
+        "page": 3,
+        "fragment": "TriviaQA   MRR@10 = 0.772 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-7-m3",
+        "name": "EM",
+        "raw": "0.462",
+        "unit": "fraction",
+        "value": 0.462,
+        "dataset": "TriviaQA",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-7-e1",
+        "config_id": "demo-7-c1",
+        "page": 3,
+        "fragment": "TriviaQA   EM = 0.462 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: HyDE"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: Llama 2 13B"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 5"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 512 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-7.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-8",
+    "title": "Context Compression in RAG",
+    "authors": "Wang H., Liu Y.",
+    "year": 2022,
+    "kind": "Научная статья",
+    "abstract": "Отбор информативных предложений перед генерацией ответа.",
+    "config": {
+      "variant": "Сжатие контекста",
+      "model": "T5-large",
+      "embedding": "Dense encoder",
+      "top_k": 10,
+      "chunk_size": 256,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "NQ"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-8-m1",
+        "name": "Recall@5",
+        "raw": "0.879",
+        "unit": "fraction",
+        "value": 0.879,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-8-e1",
+        "config_id": "demo-8-c1",
+        "page": 3,
+        "fragment": "NQ   Recall@5 = 0.879 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-8-m2",
+        "name": "MRR@10",
+        "raw": "0.767",
+        "unit": "fraction",
+        "value": 0.767,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-8-e1",
+        "config_id": "demo-8-c1",
+        "page": 3,
+        "fragment": "NQ   MRR@10 = 0.767 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-8-m3",
+        "name": "EM",
+        "raw": "0.451",
+        "unit": "fraction",
+        "value": 0.451,
+        "dataset": "NQ",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-8-e1",
+        "config_id": "demo-8-c1",
+        "page": 3,
+        "fragment": "NQ   EM = 0.451 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Context compression"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: T5-large"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 10"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 256 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-8.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-9",
+    "title": "Domain-Adaptive RAG for Science",
+    "authors": "Rao A., Evans M.",
+    "year": 2022,
+    "kind": "Научная статья",
+    "abstract": "Поиск научных свидетельств в специализированной коллекции документов.",
+    "config": {
+      "variant": "Стандартный RAG",
+      "model": "T5-base",
+      "embedding": "Dense encoder",
+      "top_k": 10,
+      "chunk_size": 512,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "Извлечение фактов",
+    "datasets": [
+      "SciFact"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-9-m1",
+        "name": "Recall@5",
+        "raw": "0.853",
+        "unit": "fraction",
+        "value": 0.853,
+        "dataset": "SciFact",
+        "task": "Извлечение фактов",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-9-e1",
+        "config_id": "demo-9-c1",
+        "page": 3,
+        "fragment": "SciFact   Recall@5 = 0.853 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-9-m2",
+        "name": "MRR@10",
+        "raw": "0.731",
+        "unit": "fraction",
+        "value": 0.731,
+        "dataset": "SciFact",
+        "task": "Извлечение фактов",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-9-e1",
+        "config_id": "demo-9-c1",
+        "page": 3,
+        "fragment": "SciFact   MRR@10 = 0.731 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-9-m3",
+        "name": "EM",
+        "raw": "0.429",
+        "unit": "fraction",
+        "value": 0.429,
+        "dataset": "SciFact",
+        "task": "Извлечение фактов",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-9-e1",
+        "config_id": "demo-9-c1",
+        "page": 3,
+        "fragment": "SciFact   EM = 0.429 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Standard RAG"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: T5-base"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 10"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 512 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-9.pdf",
+    "pages": 3,
+    "demo": true
+  },
+  {
+    "id": "demo-10",
+    "title": "Dense Retrieval for Open Questions",
+    "authors": "Wu K., Li X.",
+    "year": 2021,
+    "kind": "Научная статья",
+    "abstract": "Оценка плотного поиска на коллекции открытых вопросов.",
+    "config": {
+      "variant": "Стандартный RAG",
+      "model": "BART-large",
+      "embedding": "Dense encoder",
+      "top_k": 5,
+      "chunk_size": 256,
+      "chunk_overlap": 50,
+      "retrieval": "Cosine similarity"
+    },
+    "task": "QA",
+    "datasets": [
+      "WebQuestions"
+    ],
+    "protocol": "Held-out test split",
+    "metrics": [
+      {
+        "id": "demo-10-m1",
+        "name": "Recall@5",
+        "raw": "0.824",
+        "unit": "fraction",
+        "value": 0.824,
+        "dataset": "WebQuestions",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-10-e1",
+        "config_id": "demo-10-c1",
+        "page": 3,
+        "fragment": "WebQuestions   Recall@5 = 0.824 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-10-m2",
+        "name": "MRR@10",
+        "raw": "0.709",
+        "unit": "fraction",
+        "value": 0.709,
+        "dataset": "WebQuestions",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-10-e1",
+        "config_id": "demo-10-c1",
+        "page": 3,
+        "fragment": "WebQuestions   MRR@10 = 0.709 (fraction)",
+        "origin": "primary"
+      },
+      {
+        "id": "demo-10-m3",
+        "name": "EM",
+        "raw": "0.409",
+        "unit": "fraction",
+        "value": 0.409,
+        "dataset": "WebQuestions",
+        "task": "QA",
+        "protocol": "Held-out test split",
+        "experiment_id": "demo-10-e1",
+        "config_id": "demo-10-c1",
+        "page": 3,
+        "fragment": "WebQuestions   EM = 0.409 (fraction)",
+        "origin": "primary"
+      }
+    ],
+    "evidence": {
+      "variant": {
+        "page": 2,
+        "fragment": "RAG variant: Standard RAG"
+      },
+      "model": {
+        "page": 2,
+        "fragment": "Generator model: BART-large"
+      },
+      "embedding": {
+        "page": 2,
+        "fragment": "Embedding model: Dense encoder"
+      },
+      "top_k": {
+        "page": 2,
+        "fragment": "Top-k: 5"
+      },
+      "chunk_size": {
+        "page": 2,
+        "fragment": "Chunk size: 256 tokens"
+      },
+      "chunk_overlap": {
+        "page": 2,
+        "fragment": "Chunk overlap: 50 tokens"
+      },
+      "retrieval": {
+        "page": 2,
+        "fragment": "Retrieval method: Cosine similarity"
+      }
+    },
+    "file": "demo-10.pdf",
+    "pages": 3,
+    "demo": true
+  }
+]

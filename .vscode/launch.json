@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "type": "node",
+    "request": "launch",
+    "name": "Запустить RAG Research Analyzer",
+    "program": "${workspaceFolder}/server.mjs",
+    "console": "internalConsole",
+    "serverReadyAction": { "pattern": "(http://127\\.0\\.0\\.1:[0-9]+)", "uriFormat": "%s", "action": "openExternally" }
+  }]
+}
