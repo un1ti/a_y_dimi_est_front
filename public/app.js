@@ -6,10 +6,10 @@ import {openPdf,paint} from './viewer.js';
 const $=q=>document.querySelector(q);
 const state={view:'overview',id:'',selected:'',q:'',sort:'new',tab:0,filters:{},row:'',compare:new Set(),page:1,pdfPage:1,zoom:1,fragment:'',collection:''};
 const titles={overview:'Обзор исследований RAG',experiments:'Каталог экспериментов',collections:'Коллекции',analysis:'Анализ публикации'};
-let papers=[],collections=[],connected=false,toastTimer;
+let papers=[],collections=[],toastTimer;
 const main=$('#main'),modal=$('#modal');
 const active=()=>papers.find(p=>p.id===state.id);
-const visible=()=>papers.filter(p=>[p.title,p.authors,p.year,p.task,...keys(p),...Object.values(p.config),...p.metrics.map(m=>m.name)].join(' ').toLowerCase().includes(state.q.toLowerCase().trim()));
+const visible=()=>papers.filter(p=>[p.title,p.authors,p.year,p.task,...keys(p),...Object.values(p.config),...p.metrics.flatMap(m=>[m.name,m.config?.variant,m.config?.model])].join(' ').toLowerCase().includes(state.q.toLowerCase().trim()));
 function notify(t){$('#notice').textContent=t;$('#notice').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#notice').classList.remove('show'),4500);}
 function dialog(title,content,wide=false){
   if(modal.open)modal.close();
@@ -19,7 +19,7 @@ function dialog(title,content,wide=false){
 }
 function go(view,id=''){location.hash=route(view,id);}
 function header(){
-  $('#header').innerHTML=`<div class="top"><a href="#overview" class="brand"><span class="mark">${ico('Layers3',26)}</span><span>RAG <b>Research Analyzer</b></span></a><nav>${[['overview','Обзор'],['experiments','Исследования'],['collections','Коллекции']].map(([k,t])=>`<a class="${state.view===k||k==='experiments'&&state.view==='analysis'?'on':''}" href="${route(k)}">${t}</a>`).join('')}</nav><label class="search">${ico('Search',16)}<input id="query" type="search" value="${esc(state.q)}" placeholder="Поиск по библиотеке" aria-label="Поиск по публикациям, методам и метрикам"><kbd>Ctrl K</kbd></label><span class="avatar" title="Локальное рабочее пространство">R</span></div>`;
+  $('#header').innerHTML=`<div class="top"><a href="#overview" class="brand"><span class="mark">${ico('Layers3',26)}</span><span>RAG <b>Research Analyzer</b></span></a><nav>${[['overview','Обзор'],['experiments','Исследования'],['collections','Коллекции']].map(([k,t])=>`<a class="${state.view===k||k==='experiments'&&state.view==='analysis'?'on':''}" href="${route(k)}">${t}</a>`).join('')}</nav><label class="search">${ico('Search',16)}<input id="query" type="search" value="${esc(state.q)}" placeholder="Поиск по библиотеке" aria-label="Поиск по публикациям, методам и метрикам"></label><span class="avatar" title="Локальное рабочее пространство">R</span></div>`;
 }
 function body(){
   const p=active();
@@ -27,7 +27,11 @@ function body(){
   document.title=titles[view]+' · RAG Research Analyzer';
   const subs={overview:'Анализ научных публикаций по Retrieval-Augmented Generation',experiments:'Конфигурации, метрики и условия оценки RAG-систем',collections:'Тематические подборки публикаций из вашей библиотеки',analysis:p?.file||''};
   let actions=btn('upload','Загрузить PDF','Upload','primary');
-  if(view==='analysis'&&p)actions=(p.pending?btn('analyze','Анализировать','FlaskConical','primary'):btn('validate','Проверить','ShieldCheck','primary'))+btn('export','Экспорт','Download');
+  if(view==='analysis'&&p){
+    const busy=processing.has(p.id);
+    const analyzeButton=btn('analyze',busy?'Идёт анализ…':p.pending?'Анализировать':'Повторить анализ','FlaskConical','primary',busy?'disabled':'');
+    actions=(p.demo?'':analyzeButton)+(p.pending?'':btn('validate','Проверить','ShieldCheck'))+btn('export','Экспорт','Download');
+  }
   if(view==='collections')actions=btn('newCollection','Создать коллекцию','Plus','primary');
   main.innerHTML=`<div class="crumb">${ico('Layers3',14)} Рабочее пространство ${ico('ChevronRight',12)} <span>${({overview:'Обзор',experiments:'Исследования',collections:'Коллекции',analysis:'Исследования / Анализ'})[view]}</span></div><div class="heading"><div>${view==='analysis'?'<a class="text-link" href="#experiments">← К экспериментам</a>':''}<h1>${titles[view]}</h1><p>${esc(subs[view])}</p></div><div class="actions">${actions}</div></div><div id="content"></div>`;
   content();
@@ -57,11 +61,11 @@ function navigate(){
   const [view,id]=location.hash.slice(1).split('/');
   state.view=Object.hasOwn(titles,view)?view:'overview';
   state.id=id?decodeURIComponent(id):'';
-  if(state.view==='analysis'){state.pdfPage=1;state.zoom=1;state.fragment='';}
+  if(state.view==='analysis'){state.pdfPage=1;state.zoom=1;state.fragment='';state.finding=0;}
   header();body();
 }
 function upload(){
-  dialog('Загрузить публикацию',`<form id="uploadform"><p>Добавьте PDF в локальную библиотеку. Для извлечения данных используется подключаемый сервис анализа.</p><label class="drop">${ico('Upload',28)}<strong>Выберите PDF-файл</strong><span>До 64 МБ</span><input id="uploadfile" type="file" accept=".pdf,application/pdf" required></label><label class="field">Название в библиотеке<input name="title" placeholder="По умолчанию — имя файла" maxlength="500"></label><p class="formerr" role="alert"></p><div class="dialogactions">${btn('close','Отмена','','subtle','type="button"')}<button class="btn primary" type="submit">Добавить в библиотеку</button></div></form>`);
+  dialog('Загрузить публикацию',`<form id="uploadform"><p>Добавьте PDF в локальную библиотеку. Нажмите «Анализировать» в карточке, чтобы обработать PDF локально с помощью Scientific Arbitrator v2.5.</p><label class="drop">${ico('Upload',28)}<strong>Выберите PDF-файл</strong><span>До 64 МБ</span><input id="uploadfile" type="file" accept=".pdf,application/pdf" required></label><label class="field">Название в библиотеке<input name="title" placeholder="По умолчанию — имя файла" maxlength="500"></label><p class="formerr" role="alert"></p><div class="dialogactions">${btn('close','Отмена','','subtle','type="button"')}<button class="btn primary" type="submit">Добавить в библиотеку</button></div></form>`);
 }
 async function addPaper(form){
   const file=$('#uploadfile').files[0];
@@ -79,16 +83,17 @@ const processing=new Set();
 async function runAnalysis(){
   const p=active();
   if(!p||processing.has(p.id))return;
-  if(!connected){dialog('Подключение нейросети','<p>PDF сохранён. Для запуска анализа укажите адрес готового сервиса в переменной RAG_ANALYSIS_URL и перезапустите сервер сайта.</p>');return;}
-  processing.add(p.id);notify('PDF передан на анализ…');
+  
+  processing.add(p.id);body();notify('Scientific Arbitrator v2.5 обрабатывает PDF…');
   try{
-    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/pdf'},body:await read('files',p.id)});
+    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/pdf','X-PDF-Filename':encodeURIComponent(p.file)},body:await read('files',p.id)});
     const result=await res.json();
     if(!res.ok)throw Error(result.error||'Ошибка сервиса анализа.');
+    if(result.scientific) result.title=p.title;
     const next=acceptResult(result,p);
     await save([['papers',next.id,next]]);papers[papers.findIndex(x=>x.id===p.id)]=next;
     body();notify('Результаты анализа сохранены');
-  }finally{processing.delete(p.id);}
+  }finally{processing.delete(p.id);if(active()?.id===p.id)body();}
 }
 function exportFile(p,type){
   let data=JSON.stringify({...p,validation:issues(p)},null,2);
@@ -124,6 +129,7 @@ document.addEventListener('click',async event=>{
       case 'evidence':showSource(active().evidence[key],active());return;
       case 'validate':{const notes=issues(active());dialog('Проверка данных',notes.length?notes.map(n=>`<p>${esc(n)}</p>`).join(''):'<p class="good">Проверки пройдены. Параметры конфигурации согласованы, у значений метрик указаны эксперимент и источник.</p>');return;}
       case 'analyze':await runAnalysis();return;
+      case 'findingSource':{const p=active(), e=p.scientific.records[state.finding||0].evidence[Number(index)];showSource({page:e.page,fragment:e.quote},p);return;}
       case 'export':dialog('Экспорт результатов',`<p>JSON содержит карточку, связи, источники и замечания. CSV содержит строки метрик.</p><div class="dialogactions">${btn('json','Скачать JSON','Download','primary')}${btn('csv','Скачать CSV','Download')}</div>`);return;
       case 'csv':case 'json':exportFile(active(),a);return;
       case 'collection':state.collection=id;break;
@@ -156,7 +162,8 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('change',e=>{
   const el=e.target;
-  if(el.id==='sort')state.sort=el.value;
+  if(el.id==='finding')state.finding=Number(el.value);
+  else if(el.id==='sort')state.sort=el.value;
   else if(el.id==='pageNumber'){state.pdfPage=Math.max(1,Math.min(active().pages,parseInt(el.value,10)||1));state.fragment='';}
   else if(el.dataset.filter){const k=el.dataset.filter;let set=new Set(state.filters[k]||[]);el.checked?set.add(el.value):set.delete(el.value);state.filters[k]=[...set];state.page=1;}
   else if(el.dataset.compare){el.checked?state.compare.add(el.dataset.compare):state.compare.delete(el.dataset.compare);}
@@ -169,7 +176,6 @@ try{
   [papers,collections]=await Promise.all([library(),read('collections')]);
   const initialized=await read('collections','benchmarks');
   if(!initialized){const c={id:'benchmarks',name:'RAG-бенчмарки',ids:['demo-1','demo-2','demo-4']};await save([['collections',c.id,c]]);collections.push(c);}
-  connected=await fetch('/api/status').then(r=>r.json()).then(s=>s.connected).catch(()=>false);
   navigate();
 }catch(e){main.textContent='Не удалось открыть локальную библиотеку. Разрешите хранилище сайта и обновите страницу. '+e.message;}
 

@@ -1,0 +1,41 @@
+{
+  "version": "2.4",
+  "files": [
+    {
+      "file": "app/services/rag_hierarchical_tables.py",
+      "backup": null,
+      "old_sha256": null,
+      "installed_sha256": "949d4eb3afbb64445e2e217f27069d8432c427669c77b2d2c9f885e8b1916b4e"
+    },
+    {
+      "file": "app/services/rag_pdf_table_recovery.py",
+      "backup": "app/services/rag_pdf_table_recovery.py.before_rag_v24_20261121_165512_004965.bak",
+      "old_sha256": "40ca0b47259de1dc822bdfab42c35ff830a8d07d9b1c3341c544a2bbdbc05954",
+      "installed_sha256": "e080a7885b9c18700096ac63311a5c15ce793a3bcda80db4d1961c304c8db649"
+    },
+    {
+      "file": "app/services/rag_table_extraction.py",
+      "backup": "app/services/rag_table_extraction.py.before_rag_v24_20261121_165512_004965.bak",
+      "old_sha256": "12de7f9769eca2fc8a0a94cbb33786a33e69d9407bbc1231734333946a0121b0",
+      "installed_sha256": "6b69659311fad07bb6dce05d356d230983ab182a08ceffa3be50da9273e0a9f4"
+    },
+    {
+      "file": "app/services/grounding.py",
+      "backup": "app/services/grounding.py.before_rag_v24_20261121_165512_004965.bak",
+      "old_sha256": "ac9ddece9d6131a581beb10d0ffbd5c816f77d50f2eb433865fd0dd3e9305063",
+      "installed_sha256": "7e39781b3b1278b302534ae3c193c5b2e9492d94491738ae8b1bce4d85448eb3"
+    },
+    {
+      "file": "app/api/rag_table_routes.py",
+      "backup": "app/api/rag_table_routes.py.before_rag_v24_20261121_165512_004965.bak",
+      "old_sha256": "9fbc0a3e3490e751facdace64680964dd3378ecea81b1a77c18710ee6f7ec0e7",
+      "installed_sha256": "23f90543761fe29e8b07b59c323337deb83405d07f68f4f2615dd0c6e99d30d6"
+    },
+    {
+      "file": "tests/test_rag_table_v24.py",
+      "backup": null,
+      "old_sha256": null,
+      "installed_sha256": "a3479dd4b451bf45bcdcf4b70a7acd9b4401dbebcd60f748aa20304b0d43e30c"
+    }
+  ]
+}

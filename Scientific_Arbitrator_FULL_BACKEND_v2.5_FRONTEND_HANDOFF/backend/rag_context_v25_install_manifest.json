@@ -1,0 +1,35 @@
+{
+  "version": "2.5",
+  "files": [
+    {
+      "file": "app/services/rag_publication_context.py",
+      "backup": null,
+      "old_sha256": null,
+      "installed_sha256": "9a6bc75f83586f0952e8183caebef987d6aaef586fbf720af5051d70e39aa823"
+    },
+    {
+      "file": "app/api/scientific_routes.py",
+      "backup": "app/api/scientific_routes.py.before_rag_context_v25_20261121_172511_394986.bak",
+      "old_sha256": "7c4c69d23206a4df92276f76f8170342e0621f0d8f72c61f5fbd01a107bebd31",
+      "installed_sha256": "2512ecbf4a4b3a8960ae9986f5622b61664b532dd128b5ba014d11ac6603e1a7"
+    },
+    {
+      "file": "app/api/quality_routes.py",
+      "backup": "app/api/quality_routes.py.before_rag_context_v25_20261121_172511_394986.bak",
+      "old_sha256": "71f4ceb2d8ade21770bb5ab85dd7e64effceea377336e0e1ed8c8533be70a946",
+      "installed_sha256": "56e855970175e27fd1e46831a3ccd09ce8ec5807baf49e4db88e98d0d841f6c0"
+    },
+    {
+      "file": "app/api/rag_profile_routes.py",
+      "backup": "app/api/rag_profile_routes.py.before_rag_context_v25_20261121_172511_394986.bak",
+      "old_sha256": "dd72868c2e261539e7e0673a8ee07b7374f4bd50b7ecdb7e1a6eca046c56d157",
+      "installed_sha256": "52e6314a979d44b432a922f4a14fae020e7c9745d757c6645b54bf7f01f93372"
+    },
+    {
+      "file": "tests/test_rag_context_v25.py",
+      "backup": null,
+      "old_sha256": null,
+      "installed_sha256": "1885a0c53174ce31d9780709a311ddd3b0b3505c36da2d0e7d225df5ce64b3e9"
+    }
+  ]
+}

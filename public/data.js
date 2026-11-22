@@ -46,7 +46,7 @@ export function issues(paper) {
 export function acceptResult(input, paper) {
   if (!input || typeof input.title !== 'string' || !input.title.trim() || !Array.isArray(input.metrics) || !Array.isArray(input.datasets)) throw Error('В ответе сервиса ожидаются title, datasets и metrics.');
   const str = v => typeof v === 'string' ? v : '';
-  const config = Object.fromEntries(Object.entries(input.config || {}).filter(([key,v]) => key in configLabels && ['string','number'].includes(typeof v)));
+  const config = Object.fromEntries(Object.entries(input.config || {}).filter(([key,v]) => (Object.hasOwn(configLabels, key) || ['chunk_unit', 'top_k_unit'].includes(key)) && ['string','number'].includes(typeof v)));
   const evidence = {};
   for (const [key, e] of Object.entries(input.evidence || {})) {
     if (key in configLabels && e && Number.isInteger(e.page) && typeof e.fragment === 'string') evidence[key] = { page:e.page, fragment:e.fragment };
@@ -57,7 +57,7 @@ export function acceptResult(input, paper) {
     const normalized = m.value ?? (Number.isFinite(rawNumber) && String(m.raw).trim() ? (m.unit === '%' ? rawNumber / 100 : m.unit === 'fraction' ? rawNumber : null) : null);
     return { ...m, id: str(m.id) || paper.id + '-m' + (index+1), name:m.name, raw:String(m.raw), unit:str(m.unit), value:normalized == null || !Number.isFinite(Number(normalized)) ? null : Number(normalized), page:Number(m.page), fragment:str(m.fragment), dataset:str(m.dataset), task:str(m.task), protocol:str(m.protocol), experiment_id:str(m.experiment_id), config_id:str(m.config_id), origin:str(m.origin) || 'unknown' };
   });
-  return { ...paper, title:input.title, authors:str(input.authors), year:Number(input.year)||null, kind:str(input.kind), abstract:str(input.abstract), protocol:str(input.protocol), task:str(input.task), datasets:input.datasets.filter(d=>typeof d==='string'), config, evidence, metrics, pending:false };
+  return { ...paper, scientific:input.scientific, title:input.title, authors:str(input.authors), year:Number(input.year)||null, kind:str(input.kind), abstract:str(input.abstract), protocol:str(input.protocol), task:str(input.task), datasets:input.datasets.filter(d=>typeof d==='string'), config, evidence, metrics, pending:false };
 }
 export async function library() {
   const examples = await fetch('/examples/library.json').then(r => r.json());

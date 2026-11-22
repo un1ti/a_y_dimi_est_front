@@ -1,0 +1,41 @@
+{
+  "version": "2.2",
+  "files": [
+    {
+      "file": "app/services/analysis.py",
+      "backup": "app/services/analysis.py.before_rag_v22_20261121_162552.bak",
+      "previous_sha256": "a873206faf25e8ebf57e5cf47969eee973d94acf6b74dfc9bc76a5d9a014f6df",
+      "installed_sha256": "25bdb7efd651d8a60558d0786689960f2f80557b509e4655d39e25489326411c"
+    },
+    {
+      "file": "app/main.py",
+      "backup": "app/main.py.before_rag_v22_20261121_162552.bak",
+      "previous_sha256": "dcf85d7ea6dae9c3977ab7963323bbed404bf15c9dad32efd129db5b4fc32596",
+      "installed_sha256": "115524255883eac00c5808674dca126dbd73e4cd1050ec84f9c1072e616be199"
+    },
+    {
+      "file": "app/services/rag_table_extraction.py",
+      "backup": null,
+      "previous_sha256": null,
+      "installed_sha256": "12de7f9769eca2fc8a0a94cbb33786a33e69d9407bbc1231734333946a0121b0"
+    },
+    {
+      "file": "app/services/rag_pdf_table_recovery.py",
+      "backup": null,
+      "previous_sha256": null,
+      "installed_sha256": "82d97e867c470ad4d8de78f61160a0d864e75d75550294a4374f969318ab132a"
+    },
+    {
+      "file": "app/api/rag_table_routes.py",
+      "backup": null,
+      "previous_sha256": null,
+      "installed_sha256": "88d882dd965fc63f20b7265f6dffe881dc3f02e0091f0868c99e0d31a7083102"
+    },
+    {
+      "file": "app/api/rag_profile_routes.py",
+      "backup": "app/api/rag_profile_routes.py.before_rag_v22_20261121_162552.bak",
+      "previous_sha256": "02062ebdb0424bdca96d53a0c1fc29a184af0dec193717f4b627d2b998e345b5",
+      "installed_sha256": "dd72868c2e261539e7e0673a8ee07b7374f4bd50b7ecdb7e1a6eca046c56d157"
+    }
+  ]
+}

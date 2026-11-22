@@ -12,7 +12,7 @@ const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
     if (url.pathname === '/api/status') {
-      res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify({ connected: Boolean(process.env.RAG_ANALYSIS_URL) }));
+      res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify({ connected: true, engine:'scientific-v2.5' }));
       return;
     }
     if (url.pathname === '/api/analyze' && req.method === 'POST') {
