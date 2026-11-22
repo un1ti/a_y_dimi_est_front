@@ -1,5 +1,3 @@
-import { read } from './data.js';
-
 let loaded, currentKey, serial = 0;
 async function library() {
   const pdfjs = await import('./vendor/pdfjs/pdf.min.mjs');
@@ -18,7 +16,7 @@ export async function paint(paper, pageNo, zoom, fragment) {
     if (paper.id !== currentKey) {
       currentKey = paper.id;
       const old = loaded;
-      loaded = paper.demo ? openPdf({url:'/examples/' + paper.file}) : read('files', paper.id).then(async file => openPdf({data:await file.arrayBuffer()}));
+      loaded = openPdf({url:paper.demo ? '/examples/' + paper.file : '/api/files/' + encodeURIComponent(paper.id)});
       old?.then(doc => doc.destroy()).catch(()=>{});
     }
     const doc = await loaded;

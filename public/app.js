@@ -1,4 +1,4 @@
-import {read,save,library,issues,acceptResult} from './data.js';
+import {request,saveRecord,library,issues,acceptResult} from './data.js';
 import {esc,ico,btn,route,chip,keys,statCards,detail,publicationList} from './ui.js';
 import {catalog,experiments,values,analysis,comparison} from './pages.js';
 import {openPdf,paint} from './viewer.js';
@@ -75,8 +75,11 @@ async function addPaper(form){
   const pages=pdf.numPages;
   await pdf.destroy();
   const id=crypto.randomUUID();
-  const p={id,title:form.elements.title.value.trim()||file.name.replace(/\.pdf$/i,''),authors:'',year:null,kind:'PDF',abstract:'',config:{},datasets:[],task:'',protocol:'',metrics:[],evidence:{},file:file.name,pages,pending:true,demo:false};
-  await save([['papers',id,p],['files',id,file]]);
+  const upload = await request('/api/files/'+id,{method:'POST',body:file,headers:{
+    'Content-Type':'application/pdf','X-File-Name':encodeURIComponent(file.name),'X-Page-Count':String(pages),
+    'X-Paper-Title':encodeURIComponent(form.elements.title.value.trim())
+  }});
+  const p = await upload.json();
   papers.unshift(p); state.selected=id;state.q='';modal.close();go('analysis',id);notify('PDF добавлен в библиотеку');
 }
 const processing=new Set();
@@ -86,12 +89,13 @@ async function runAnalysis(){
   
   processing.add(p.id);body();notify('Scientific Arbitrator v2.5 обрабатывает PDF…');
   try{
-    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/pdf','X-PDF-Filename':encodeURIComponent(p.file)},body:await read('files',p.id)});
+    const file=await (await request('/api/files/'+encodeURIComponent(p.id))).blob();
+    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/pdf','X-PDF-Filename':encodeURIComponent(p.file)},body:file});
     const result=await res.json();
     if(!res.ok)throw Error(result.error||'Ошибка сервиса анализа.');
     if(result.scientific) result.title=p.title;
     const next=acceptResult(result,p);
-    await save([['papers',next.id,next]]);papers[papers.findIndex(x=>x.id===p.id)]=next;
+    await saveRecord('/api/papers',next);papers[papers.findIndex(x=>x.id===p.id)]=next;
     body();notify('Результаты анализа сохранены');
   }finally{processing.delete(p.id);if(active()?.id===p.id)body();}
 }
@@ -150,7 +154,7 @@ document.addEventListener('submit',async event=>{
     }else{
       c={...collections.find(x=>x.id===state.collection),ids:new FormData(f).getAll('member')};
     }
-    await save([['collections',c.id,c]]);collections=await read('collections');state.collection=c.id;modal.close();content();
+    await saveRecord('/api/collections',c);collections=(await library()).collections;state.collection=c.id;modal.close();content();
   }catch(e){f.querySelector('.formerr').textContent=e.message;}finally{button.disabled=false;}
 });
 document.addEventListener('input',e=>{
@@ -173,9 +177,7 @@ document.addEventListener('change',e=>{
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#query')?.focus();}});
 window.addEventListener('hashchange',navigate);
 try{
-  [papers,collections]=await Promise.all([library(),read('collections')]);
-  const initialized=await read('collections','benchmarks');
-  if(!initialized){const c={id:'benchmarks',name:'RAG-бенчмарки',ids:['demo-1','demo-2','demo-4']};await save([['collections',c.id,c]]);collections.push(c);}
+  ({papers,collections}=await library());
   navigate();
-}catch(e){main.textContent='Не удалось открыть локальную библиотеку. Разрешите хранилище сайта и обновите страницу. '+e.message;}
+}catch(e){main.textContent='Не удалось открыть библиотеку SQLite. '+e.message;}
 

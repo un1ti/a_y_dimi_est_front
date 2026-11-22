@@ -1,27 +1,13 @@
-const db = await new Promise((resolve, reject) => {
-  const request = indexedDB.open('viniti-rag-library', 1);
-  request.onupgradeneeded = () => {
-    for (const name of ['papers', 'files', 'collections']) request.result.createObjectStore(name);
-  };
-  request.onsuccess = () => resolve(request.result);
-  request.onerror = () => reject(request.error);
-});
-
-export function read(store, key) {
-  return new Promise((resolve, reject) => {
-    const table = db.transaction(store).objectStore(store);
-    const req = key === undefined ? table.getAll() : table.get(key);
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
+export async function request(url, options) {
+  const response = await fetch(url,options);
+  if (!response.ok) {
+    const result = await response.json().catch(()=>({}));
+    throw Error(result.error || 'Не удалось обратиться к библиотеке на сервере.');
+  }
+  return response;
 }
-export function save(entries) {
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([...new Set(entries.map(e => e[0]))], 'readwrite');
-    for (const [store, key, value] of entries) tx.objectStore(store).put(value, key);
-    tx.oncomplete = resolve;
-    tx.onabort = tx.onerror = () => reject(tx.error);
-  });
+export function saveRecord(url, value) {
+  return request(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
 }
 export const configLabels = { variant: 'Тип RAG', top_k: 'Top-k (поиск)', chunk_size: 'Размер фрагмента', chunk_overlap: 'Перекрытие фрагментов', embedding: 'Модель эмбеддингов', model: 'Генератор', retrieval: 'Метод поиска' };
 
@@ -60,7 +46,6 @@ export function acceptResult(input, paper) {
   return { ...paper, scientific:input.scientific, title:input.title, authors:str(input.authors), year:Number(input.year)||null, kind:str(input.kind), abstract:str(input.abstract), protocol:str(input.protocol), task:str(input.task), datasets:input.datasets.filter(d=>typeof d==='string'), config, evidence, metrics, pending:false };
 }
 export async function library() {
-  const examples = await fetch('/examples/library.json').then(r => r.json());
-  return [...await read('papers'), ...examples];
+  return (await request('/api/library')).json();
 }
 
